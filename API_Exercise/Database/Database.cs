@@ -8,8 +8,18 @@ namespace API_Exercise
     public class Database
     {
         private UserModel login_user;
+        private string db_name = string.Empty;
+        private string db_url = string.Empty;
+        private string ConnectionString = string.Empty;  //"Data Source=localhost\\SQLEXPRESS;Initial Catalog=Gflix;Integrated Security=True";
 
-        private string ConnectionString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=Gflix;Integrated Security=True";
+        public Database()
+        {
+            var app_settings = System.Configuration.ConfigurationManager.AppSettings;
+            string db_url = app_settings.Get("db_connection");
+            string db_name = app_settings.Get("db_name");
+            this.ConnectionString = "Data Source="+db_url+ ";Initial Catalog="+db_name+ ";Integrated Security=True";
+            Console.WriteLine(this.ConnectionString);
+        }
 
         public void Set_User(UserModel user)
         {
